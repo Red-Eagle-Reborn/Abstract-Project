@@ -4,11 +4,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import org.redeagle.absproj.materialswing.GUITheme;
+import org.redeagle.absproj.materialswing.MaterialLookAndFeel;
+
 import de.craften.ui.swingmaterial.MaterialTextField;
-import javax.swing.SwingConstants;
 
 public class RandomNumberGenerator extends JFrame {
 
@@ -36,6 +37,7 @@ public class RandomNumberGenerator extends JFrame {
 	 * Create the frame.
 	 */
 	public RandomNumberGenerator() {
+		MaterialLookAndFeel ui = new MaterialLookAndFeel (GUITheme.DARK_THEME);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setLocationRelativeTo(null);
@@ -43,19 +45,6 @@ public class RandomNumberGenerator extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
-		
-		textField = new MaterialTextField();
-		textField.setHorizontalAlignment(SwingConstants.CENTER);
-		textField.setBounds(10, 11, 315, 50);
-		textField.setLabel("asd");
-		textField.setHint("20");
-		contentPane.add(textField);
-		textField_1 = new MaterialTextField();
-		textField_1.setHorizontalAlignment(SwingConstants.CENTER);
-		textField_1.setBounds(10, 100, 315, 90);
-		textField_1.setLabel("asd");
-		textField_1.setHint("20");
-		contentPane.add(textField_1);
+		contentPane.setLayout(null);		
 	}
 }
