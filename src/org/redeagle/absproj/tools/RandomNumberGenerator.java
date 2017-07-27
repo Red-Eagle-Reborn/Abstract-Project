@@ -10,6 +10,7 @@ import org.redeagle.absproj.materialswing.GUITheme;
 import org.redeagle.absproj.materialswing.MaterialLookAndFeel;
 
 import de.craften.ui.swingmaterial.MaterialTextField;
+import javax.swing.JLabel;
 
 public class RandomNumberGenerator extends JFrame {
 
@@ -46,5 +47,9 @@ public class RandomNumberGenerator extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);		
+		
+		JLabel lblTestComponent = new JLabel("Test Component");
+		lblTestComponent.setBounds(10, 11, 46, 14);
+		contentPane.add(lblTestComponent);
 	}
 }
