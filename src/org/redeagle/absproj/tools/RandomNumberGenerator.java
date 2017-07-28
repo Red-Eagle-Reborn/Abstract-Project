@@ -1,13 +1,16 @@
 package org.redeagle.absproj.tools;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.util.Locale;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import java.util.Random;
 
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,12 +23,6 @@ import org.redeagle.absproj.materialswing.GUITheme;
 import org.redeagle.absproj.materialswing.MaterialLookAndFeel;
 
 import de.craften.ui.swingmaterial.MaterialTextField;
-import javax.swing.JButton;
-import java.awt.Color;
-import javax.swing.JCheckBox;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.UIManager;
 
 public class RandomNumberGenerator extends JFrame {
 
@@ -37,6 +34,7 @@ public class RandomNumberGenerator extends JFrame {
 	private JTextField numAmount;
 	private JTextField ignoredNum;
 	private JTextField numDelimiter;
+	private int numAmounts = 1;
 
 	/**
 	 * Launch the application.
@@ -109,7 +107,7 @@ public class RandomNumberGenerator extends JFrame {
 				}
 			}
 		});
-		numMin.setBounds(56, 19, 104, 20);
+		numMin.setBounds(56, 19, 154, 20);
 		contentPane.add(numMin);
 		numMin.setColumns(10);
 		
@@ -125,7 +123,7 @@ public class RandomNumberGenerator extends JFrame {
 		
 		numMax = new JTextField();
 		numMax.setColumns(10);
-		numMax.setBounds(56, 47, 104, 20);
+		numMax.setBounds(56, 47, 154, 20);
 		numMax.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent kv) {
 				if((kv.getKeyCode() < 48 || kv.getKeyCode() > 57) && kv.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
@@ -139,7 +137,7 @@ public class RandomNumberGenerator extends JFrame {
 		
 		JButton btnGenerate = new JButton("Generate");
 		btnGenerate.setForeground(Color.WHITE);
-		btnGenerate.setBounds(21, 75, 139, 29);
+		btnGenerate.setBounds(21, 75, 189, 29);
 		contentPane.add(btnGenerate);
 		panel.setVisible(false);
 		JCheckBox advanceMode = new JCheckBox("Advance");
@@ -156,14 +154,14 @@ public class RandomNumberGenerator extends JFrame {
 				}
 			}
 		});
-		advanceMode.setBounds(17, 111, 143, 23);
+		advanceMode.setBounds(17, 111, 193, 23);
 		contentPane.add(advanceMode);
 		
-		JCheckBox toogleSameNumber = new JCheckBox("No Same Number");
-		toogleSameNumber.setForeground(Color.WHITE);
-		toogleSameNumber.setBackground(new Color(75, 75, 75));
-		toogleSameNumber.setBounds(6, 7, 181, 23);
-		panel.add(toogleSameNumber);
+		JCheckBox toggleSameNumber = new JCheckBox("No Same Number");
+		toggleSameNumber.setForeground(Color.WHITE);
+		toggleSameNumber.setBackground(new Color(75, 75, 75));
+		toggleSameNumber.setBounds(6, 7, 181, 23);
+		panel.add(toggleSameNumber);
 		
 		JLabel lblAmountOfNumber = new JLabel("Amount of number :");
 		lblAmountOfNumber.setForeground(Color.WHITE);
@@ -199,9 +197,33 @@ public class RandomNumberGenerator extends JFrame {
 		btnReset.setBounds(6, 177, 181, 32);
 		panel.add(btnReset);
 		
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.getDefault());
-		DecimalFormat decimalFormat = (DecimalFormat) numberFormat;
-		decimalFormat.setGroupingUsed(false);
+		JLabel resultLbl = new JLabel("");
+		resultLbl.setForeground(Color.WHITE);
+		resultLbl.setBounds(21, 141, 189, 98);
+		contentPane.add(resultLbl);
+		
+		btnGenerate.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				numAmounts = numAmount.getText() != "" ? Integer.parseInt(numAmount.getText()) : 1;
+				boolean tSM = toggleSameNumber.isSelected();
+				String[] ignoredNumberF = ignoredNum.getText().split(",");
+				int[] ignoredNumber = new int[ignoredNumberF.length];
+				
+				for(int i = 0; i < ignoredNumberF.length; i++) {
+					ignoredNumber[i] = Integer.parseInt(ignoredNumberF[i]);
+				}
+				String delimiter = numDelimiter.getText() != "" ? numDelimiter.getText() : ",";
+				int minNumber = numMin.getText() != null ? Integer.parseInt(numMin.getText()) : 0;
+				int maxNumber = numMax.getText() != null ? Integer.parseInt(numMax.getText()) : 1;
+				String finals = "";
+				for(int i = 0; i < numAmounts; i++) {
+					finals += Integer.toString(randInt(minNumber,maxNumber)) + ",";
+				}
+				finals = finals.substring(0, finals.length()-1);
+				resultLbl.setText(finals);
+			}
+		});
 	}
 	
 	public static int randInt(int min, int max) {
