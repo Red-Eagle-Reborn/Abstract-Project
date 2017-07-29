@@ -77,5 +77,9 @@ public class Menu extends JFrame {
 		namePicker.setFont(GUITheme.getBold());
 		namePicker.setBounds(10, 70, 398, 48);
 		contentPane.add(namePicker);
+/* Test Comment
+
+*/
+
 	}
 }
