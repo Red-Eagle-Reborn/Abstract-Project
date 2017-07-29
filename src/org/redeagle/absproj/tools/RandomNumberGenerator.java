@@ -222,6 +222,7 @@ public class RandomNumberGenerator extends JFrame {
 				}
 				finals = finals.substring(0, finals.length()-1);
 				resultLbl.setText(finals);
+				/*testt*/
 			}
 		});
 	}
