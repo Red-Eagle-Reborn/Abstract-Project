@@ -6,7 +6,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -217,18 +216,25 @@ public class RandomNumberGenerator extends JFrame {
 				int minNumber = numMin.getText() != null ? Integer.parseInt(numMin.getText()) : 0;
 				int maxNumber = numMax.getText() != null ? Integer.parseInt(numMax.getText()) : 1;
 				String finals = "";
+				
 				for(int i = 0; i < numAmounts; i++) {
-					finals += Integer.toString(randInt(minNumber,maxNumber)) + ",";
+					int ran = rand(new Random(), minNumber,maxNumber, ignoredNumber);
+					finals += Integer.toString(ran) + delimiter;
 				}
 				finals = finals.substring(0, finals.length()-1);
 				resultLbl.setText(finals);
-				/*testt*/
 			}
 		});
 	}
 	
-	public static int randInt(int min, int max) {
-	    Random rand = new Random();
-	    return rand.nextInt((max - min) + 1) + min;
+	public int rand(Random rnd, int min, int max, int... ignored) {
+	    int rz = min + rnd.nextInt(max - min + 1 - ignored.length);
+	    for (int i : ignored) {
+	        if (rz < i) {
+	            break;
+	        }
+	        rz++;
+	    }
+	    return rz;
 	}
 }
